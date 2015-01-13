@@ -42,3 +42,13 @@ command_line_arguments::command_line_arguments(int argc, char **argv) {
     std::cerr<<std::endl;
   }
 } 
+
+std::vector<std::string> split(const std::string line,const char delim) {
+  std::stringstream s_stream(line);
+  std::string segment;
+  string_vector_t segment_list;
+  while(getline(s_stream, segment, delim))
+    segment_list.push_back(segment);
+  return segment_list;
+}
+

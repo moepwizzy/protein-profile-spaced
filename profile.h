@@ -3,18 +3,28 @@
 
 #include <fstream>
 #include <vector>
+#include <map>
 #include <utility>
 #include <string>
 #include <iostream>
+#include <stdlib.h>
 
-typedef std::vector<std::pair<char,double>*> freq_prof; 
+#include "misc.h"
+
+typedef std::vector<double*>::iterator vector_it;
+typedef std::map<unsigned int,unsigned int> map_t;
 
 class profile {
-  freq_prof frequencies;
-  profile(char *path);
-  ~profile();
+  std::vector<double*> frequencies;
+  const std::string name;
+  std::string sequence;
  public:
-  freq_prof get_frequencies();
+  profile(std::string,char*);
+  ~profile();
+  const std::string get_name();
+  std::vector<double*> get_frequencies();
+  void print_profile();
+  map_t count();
 };
 
 #endif
