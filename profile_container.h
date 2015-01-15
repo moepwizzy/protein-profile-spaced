@@ -7,6 +7,7 @@
 #include <algorithm> //random shuffle
 #include <cstdlib> //srand
 #include <ctime> //time
+#include <iostream>
 
 #include "profile.h"
 
@@ -25,6 +26,7 @@ class profile_container {
   bool add_profile(profile*);
   profile* get_profile(std::string);
   bool count_all_profiles();
+  void print_stuff();
 };
 
 #endif

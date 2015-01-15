@@ -7,7 +7,7 @@ command_line_arguments::command_line_arguments(int argc, char **argv) {
     {"verbose", no_argument, &verbose_flag, 1},
     {"threads", required_argument, 0, 'a'}
   };
-  while ((c = getopt_long(argc, argv, "f:k:l:n:t:",
+  while ((c = getopt_long(argc, argv, "f:k:l:n:t:d:",
         long_options, &option_index)) != -1) {
     switch (c) {
       case 'a':
@@ -27,6 +27,9 @@ command_line_arguments::command_line_arguments(int argc, char **argv) {
         break;
       case 't':
         table_path = optarg;
+        break;
+      case 'd':
+        dir_path = optarg;
         break;
       case '?':
         std::cerr<<"something went wrong, encountered ?"<<std::endl;
@@ -52,3 +55,6 @@ std::vector<std::string> split(const std::string line,const char delim) {
   return segment_list;
 }
 
+int power (int base, int exponent) {
+  return exponent == 1 ? base : base * power(base, exponent - 1);
+}

@@ -9,6 +9,7 @@
 
 #include "misc.h"
 #include "profile.h"
+#include "profile_container.h"
 
 class class_problem {
   std::string id;
@@ -20,6 +21,7 @@ class class_problem {
   void instances_added();
 };
 
-std::vector<class_problem*> generate_class_problems_from_table(char*, char*);
+std::vector<class_problem*> generate_class_problems_from_table(
+    char*, char*, profile_container&);
 
 #endif

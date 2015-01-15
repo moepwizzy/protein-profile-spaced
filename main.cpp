@@ -6,13 +6,18 @@
  *
  */
 
-#include "misc.h"
 #include <iostream>
+#include "misc.h"
 #include "profile.h"
+#include "profile_container.h"
+#include "class_problem.h"
 
 int main(int argc, char** argv) {
-  command_line_arguments test(argc, argv);
-//  profile moep(test.fasta_path);
-//  moep.print_profile();
+  command_line_arguments cl_args(argc, argv);
+  profile_container main_container (cl_args.k, cl_args.l, cl_args.n);
+  std::vector<class_problem*> cp_vector = generate_class_problems_from_table(
+      cl_args.table_path, cl_args.dir_path, main_container);
+  main_container.print_stuff();
+  main_container.count_all_profiles();
   return 1;
-}
+}   
