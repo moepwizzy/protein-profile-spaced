@@ -3,6 +3,7 @@
 static int verbose_flag;
 command_line_arguments::command_line_arguments(int argc, char **argv) {
   int c = 0, option_index = 0;
+  k = -1, n = -1, l = -1, number_of_threads = 1;
   struct option long_options[] = {
     {"verbose", no_argument, &verbose_flag, 1},
     {"threads", required_argument, 0, 'a'}
@@ -23,16 +24,17 @@ command_line_arguments::command_line_arguments(int argc, char **argv) {
         n = atoi(optarg);
         break;
       case 'f':
-        fasta_path = optarg;
+        fasta_path = std::string(optarg);
         break;
       case 't':
-        table_path = optarg;
+        table_path = std::string(optarg);
         break;
       case 'd':
-        dir_path = optarg;
+        dir_path = std::string(optarg);
         break;
       case '?':
         std::cerr<<"something went wrong, encountered ?"<<std::endl;
+        exit(1);
         break;
       default:
         abort();
@@ -43,6 +45,14 @@ command_line_arguments::command_line_arguments(int argc, char **argv) {
     while(optind < argc)
       std::cerr<<" "<<argv[optind++];
     std::cerr<<std::endl;
+  }
+  if (k == -1 || n == -1 || l == -1 ||
+      table_path.size() == 0 || 
+      dir_path.size() == 0 ) {
+    std::cout<<"usage: program -k # -l # -n # "<<
+      "-t path_to_casttable -d profile_dir [-f fasta_file] "<<
+      "[--threads #]"<<std::endl;
+    exit(1);
   }
 } 
 

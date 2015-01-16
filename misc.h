@@ -6,12 +6,13 @@
 #include <stdlib.h>
 #include <sstream>
 #include <vector>
+#include <string>
 
 typedef std::vector<std::string> string_vector_t;
 
 struct command_line_arguments {
   int k, l, n, number_of_threads;
-  char *table_path, *fasta_path, *dir_path;
+  std::string table_path, fasta_path, dir_path;
   command_line_arguments(int, char **);
 };
 

@@ -21,12 +21,12 @@ class profile {
   std::string sequence;
   bool valid; //atm some profs do not build correctly
  public:
-  profile(std::string,char*);
+  profile(std::string,std::string);
   ~profile();
   const std::string get_name();
   std::vector<double*> get_frequencies();
   void print_profile();
-  map_t count(const std::string);
+  map_t count(std::vector<int>);
   bool is_valid() {return valid;};
 };
 

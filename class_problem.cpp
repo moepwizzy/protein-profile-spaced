@@ -20,8 +20,8 @@ void class_problem::instances_added() {
 }
 
 std::vector<class_problem*> generate_class_problems_from_table(
-    char *table_p, char* dir, profile_container &profiles) {
-  std::ifstream file(table_p);
+    std::string table_p, std::string dir, profile_container &profiles) {
+  std::ifstream file(table_p.c_str());
   std::string line;
   std::vector<class_problem*> problem_vector;
 // First line: IDs of class_problems

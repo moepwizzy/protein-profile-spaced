@@ -22,6 +22,6 @@ class class_problem {
 };
 
 std::vector<class_problem*> generate_class_problems_from_table(
-    char*, char*, profile_container&);
+    std::string, std::string, profile_container&);
 
 #endif
