@@ -51,6 +51,7 @@ map_t profile::count(std::vector<int> pattern) {
         word /= 20;
       }
       count_map[j] += word_probability;
+    }
   }
   return count_map;
 }
