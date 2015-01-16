@@ -1,7 +1,7 @@
 #include "profile_container.h"
 
 profile_container::profile_container(int k, int l, int n) : k(k), l(l), n(n) {
-  patterns = std::vector<std::vector<int>>(n);
+  patterns = std::vector<std::vector<int> >(n);
   for (patterns_vector_t::iterator it = patterns.begin();
       it != patterns.end(); ++it)
     *it = std::vector<int>();
