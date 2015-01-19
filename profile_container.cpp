@@ -36,7 +36,10 @@ bool profile_container::count_all_profiles() {
     for (profile_map_t::iterator map_it = profiles.begin(); 
         map_it != profiles.end(); ++map_it) {
       std::cout<<"Counting profile "<<moep++<<" of "<<profiles.size()<<std::endl;
-      map_it->second->count(*pat_it);
+      map_t tmp = map_it->second->count(*pat_it);
+      for (map_t::iterator it = tmp.begin(); it != tmp.end(); ++it)
+        if (count_map.count(it->first) == 0)
+          count_map[it->first][map_it->second] += it->second;
     }
   return true;
 }
