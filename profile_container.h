@@ -17,11 +17,11 @@
 
 #if (__cplusplus >= 201103L)
 typedef std::unordered_map<std::string, profile*> profile_map_t;
-typedef std::unordered_map<profile*, unsigned int> count_internal_t;
+typedef std::unordered_map<profile*, double> count_internal_t;
 typedef std::unordered_map<unsigned int, count_internal_t> count_t;
 #else
 typedef std::tr1::unordered_map<std::string, profile*> profile_map_t;
-typedef std::tr1::unordered_map<profile*, unsigned int> count_internal_t;
+typedef std::tr1::unordered_map<profile*, double> count_internal_t;
 typedef std::tr1::unordered_map<unsigned int, count_internal_t> count_t;
 #endif
 typedef std::vector<std::vector<int> > patterns_vector_t;
