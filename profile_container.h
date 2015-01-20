@@ -14,7 +14,7 @@
 #include <iostream>
 
 #include "profile.h"
-#include "threadpool.h"
+#include "../threadpool/threadpool.h"
 
 typedef std::vector<std::vector<int> > patterns_vector_t;
 #if (__cplusplus >= 201103L)
