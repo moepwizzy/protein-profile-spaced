@@ -7,6 +7,9 @@ profile_container::profile_container(int k, int l, int n) : k(k), l(l), n(n) {
     *it = std::vector<int>();
   generate_patterns();
   addable = true;
+#if (__cplusplus < 201103L)
+  pthread_mutex_init(&mutex,NULL);
+#endif
 }
 
 profile_container::~profile_container() {
@@ -32,7 +35,13 @@ profile* profile_container::get_profile(std::string name) {
 #else
 void count_thread(void * arg_ptr) {
   thread_struct *arg = (thread_struct *) arg_ptr;
-  arg->map = arg->prof->count(*arg->pattern);
+  map_t *tmp = arg->prof->count(*arg->pattern);
+  for (map_t::iterator it = tmp->begin(); it != tmp->end(); ++it) {
+    _lock_mutex(arg->mutex_ptr);
+    (*arg->c_map)[it->first][arg->prof] += it->second;
+    _unlock_mutex(arg->mutex_ptr);
+  }
+  delete tmp;
 }
 #endif
   
@@ -42,22 +51,26 @@ bool profile_container::count_all_profiles(int number_of_threads) {
       pat_it != patterns.end(); ++pat_it)
     for (profile_map_t::iterator map_it = profiles.begin(); 
         map_it != profiles.end(); ++map_it) {
-      map_t *tmp;
-      profile *tmp_prof = map_it->second;
-      std::vector<int> *pattern = &(*pat_it);
 #if (__cplusplus >= 201103L)
-      pool.addThread([tmp, tmp_prof, pattern]() mutable {
-          tmp = std::move(tmp_prof->count(*pattern));
+      count_t *c_map = &count_map;
+      profile *prof = map_it->second;
+      std::vector<int> *pattern = &(*pat_it);
+      mu_t *mutex_ptr = &mutex;
+      pool.addThread([c_map, prof, pattern, mutex_ptr]() mutable {
+        map_t *tmp = std::move(prof->count(*pattern));
+        for (map_t::iterator it = tmp->begin(); it != tmp->end(); ++it) {
+          _lock_mutex(mutex_ptr); 
+          (*c_map)[it->first][prof] += it->second;
+          _unlock_mutex(mutex_ptr);
+        }
+        delete tmp;
       });
 #else
       pool.addThread(count_thread, 
-        (void *) new thread_struct(pattern, tmp, tmp_prof));
+        (void *) new thread_struct(&(*pat_it), &count_map, map_it->second, &mutex));
 #endif
-      for (map_t::iterator it = tmp->begin(); it != tmp->end(); ++it)
-        if (count_map.count(it->first) == 0)
-          count_map[it->first][map_it->second] += it->second;
-      delete [] tmp;
     }
+  pool.wait();
   return true;
 }
 

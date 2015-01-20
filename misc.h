@@ -18,5 +18,9 @@ struct command_line_arguments {
 
 string_vector_t split(const std::string,const char);
 int power(int,int);
+template <typename T>
+void print(T text, bool nl = true) {
+  nl ? std::cout<<text<<std::endl : std::cout<<text<<std::flush;
+}
 
 #endif
