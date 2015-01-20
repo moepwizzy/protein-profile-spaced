@@ -38,8 +38,8 @@ void profile::print_profile() {
   }
 }
 
-map_t profile::count(std::vector<int> pattern) {
-  map_t count_map;
+map_t * profile::count(std::vector<int> pattern) {
+  map_t *count_map = new map_t();
   for (std::size_t i = 0; i < frequencies.size() - pattern.back(); ++i) {
     for (int j = 0; j < power(20,pattern.size()); ++j) {
       int word = j;
@@ -50,7 +50,7 @@ map_t profile::count(std::vector<int> pattern) {
         word_probability *= frequencies.at(i+*it)[amino_acid];
         word /= 20;
       }
-      count_map[j] += word_probability;
+      (*count_map)[j] += word_probability;
     }
   }
   return count_map;

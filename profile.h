@@ -26,7 +26,7 @@ class profile {
   const std::string get_name();
   std::vector<double*> get_frequencies();
   void print_profile();
-  map_t count(std::vector<int>);
+  map_t * count(std::vector<int>);
   bool is_valid() {return valid;};
 };
 

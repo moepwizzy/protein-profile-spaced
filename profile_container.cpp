@@ -28,18 +28,35 @@ profile* profile_container::get_profile(std::string name) {
   return it->second;
 }
 
-bool profile_container::count_all_profiles() {
-  addable = false;
-  int moep =0;
+#if (__cplusplus >= 201103L)
+#else
+void count_thread(void * arg_ptr) {
+  thread_struct *arg = (thread_struct *) arg_ptr;
+  arg->map = arg->prof->count(*arg->pattern);
+}
+#endif
+  
+bool profile_container::count_all_profiles(int number_of_threads) {
+  threadpool pool(number_of_threads);
   for (patterns_vector_t::iterator pat_it = patterns.begin();
       pat_it != patterns.end(); ++pat_it)
     for (profile_map_t::iterator map_it = profiles.begin(); 
         map_it != profiles.end(); ++map_it) {
-      std::cout<<"Counting profile "<<moep++<<" of "<<profiles.size()<<std::endl;
-      map_t tmp = map_it->second->count(*pat_it);
-      for (map_t::iterator it = tmp.begin(); it != tmp.end(); ++it)
+      map_t *tmp;
+      profile *tmp_prof = map_it->second;
+      std::vector<int> *pattern = &(*pat_it);
+#if (__cplusplus >= 201103L)
+      pool.addThread([tmp, tmp_prof, pattern]() mutable {
+          tmp = std::move(tmp_prof->count(*pattern));
+      });
+#else
+      pool.addThread(count_thread, 
+        (void *) new thread_struct(pattern, tmp, tmp_prof));
+#endif
+      for (map_t::iterator it = tmp->begin(); it != tmp->end(); ++it)
         if (count_map.count(it->first) == 0)
           count_map[it->first][map_it->second] += it->second;
+      delete [] tmp;
     }
   return true;
 }

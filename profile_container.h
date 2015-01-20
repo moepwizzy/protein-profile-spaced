@@ -14,7 +14,9 @@
 #include <iostream>
 
 #include "profile.h"
+#include "threadpool.h"
 
+typedef std::vector<std::vector<int> > patterns_vector_t;
 #if (__cplusplus >= 201103L)
 typedef std::unordered_map<std::string, profile*> profile_map_t;
 typedef std::unordered_map<profile*, double> count_internal_t;
@@ -23,8 +25,15 @@ typedef std::unordered_map<unsigned int, count_internal_t> count_t;
 typedef std::tr1::unordered_map<std::string, profile*> profile_map_t;
 typedef std::tr1::unordered_map<profile*, double> count_internal_t;
 typedef std::tr1::unordered_map<unsigned int, count_internal_t> count_t;
+
+struct thread_struct {
+  std::vector<int> *pattern;
+  map_t *map;
+  profile *prof;
+  thread_struct(std::vector<int> *pattern, map_t *m, profile *p) 
+    : pattern(pattern), map(m), prof(p) {};
+};
 #endif
-typedef std::vector<std::vector<int> > patterns_vector_t;
 
 class profile_container {
   const unsigned int k,l,n;
@@ -38,7 +47,7 @@ class profile_container {
   ~profile_container();
   bool add_profile(profile*);
   profile* get_profile(std::string);
-  bool count_all_profiles();
+  bool count_all_profiles(int);
   void print_stuff();
 };
 
