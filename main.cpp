@@ -34,11 +34,11 @@ int main(int argc, char** argv) {
     data_points = (*problem_it)->get_positive_testing();
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
-      problem.addTrainSeq((*it)->get_representing_vector(),POS);
+      problem.addTestSeq((*it)->get_representing_vector(),POS);
     data_points = (*problem_it)->get_negative_testing();
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
-      problem.addTrainSeq((*it)->get_representing_vector(),NEG);
+      problem.addTestSeq((*it)->get_representing_vector(),NEG);
     if(!problem.prepare()) {
         print("prepare failed");
         exit(1);
