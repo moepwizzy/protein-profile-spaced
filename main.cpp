@@ -57,5 +57,6 @@ int main(int argc, char** argv) {
     }
     pool.addThread(thread_train, (void *) problem);
   }
+  pool.wait();
   return 1;
 } 
