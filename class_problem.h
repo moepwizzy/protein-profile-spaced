@@ -19,6 +19,19 @@ class class_problem {
   class_problem(std::string);
   bool add_instance(profile*,int);
   void instances_added();
+  std::vector<profile*> get_positive_training() {
+    return instances[1];
+  }
+  std::vector<profile*> get_negative_training() {
+    return instances[2];
+  }
+  std::vector<profile*> get_positive_testing() {
+    return instances[3];
+  }
+  std::vector<profile*> get_negative_testing() {
+    return instances[4];
+  }
+  std::string get_id() { return id; }
 };
 
 std::vector<class_problem*> generate_class_problems_from_table(

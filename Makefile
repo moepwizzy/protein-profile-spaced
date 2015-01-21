@@ -2,8 +2,8 @@
 CC=g++
 # options I'll pass to the compiler.
 CFLAGS=-c -Wall# -std=c++0x
-LIBFLAGS= -L. -L../threadpool/ -llibsvm_wrapper -lthreadpool -lpthread
-LIBS=libthreadpool.a liblibsvm_wrapper.a
+LIBFLAGS= -L. -L../threadpool/ -L../custom-libsvm-wrapper/  -llibsvm_wrapper -lthreadpool -lpthread
+LIBS=../threadpool/libthreadpool.a ../custom-libsvm-wrapper/liblibsvm_wrapper.a
 TARGETS=class_problem.o profile.o misc.o profile_container.o
 
 all: $(LIBS) $(TARGETS) main.o

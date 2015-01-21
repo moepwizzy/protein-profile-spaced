@@ -71,6 +71,14 @@ bool profile_container::count_all_profiles(int number_of_threads) {
 #endif
     }
   pool.wait();
+  for (profile_map_t::iterator prof_map_it = profiles.begin();
+      prof_map_it != profiles.end(); ++prof_map_it) {
+    for (count_t::iterator outer_it= count_map.begin();
+        outer_it != count_map.end(); ++outer_it) {
+      prof_map_it->second->add_to_representing_vector(
+          outer_it->second[prof_map_it->second]);
+    }
+  }
   return true;
 }
 
