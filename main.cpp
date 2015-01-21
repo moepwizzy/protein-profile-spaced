@@ -39,9 +39,15 @@ int main(int argc, char** argv) {
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem.addTrainSeq((*it)->get_representing_vector(),NEG);
-    problem.prepare();
-    problem.train();
+    if(!problem.prepare()) {
+        print("prepare failed");
+        exit(1);
+    }
+    if(!problem.train()) {
+        print("train failed");
+        exit(1);
+    }
     std::cout<<(*problem_it)->get_id()<<": "<<problem.evaluate()<<std::endl;
   }
   return 1;
-}   
+} 
