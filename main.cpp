@@ -23,6 +23,7 @@ void thread_train (void * prob_ptr) {
         exit(1);
     }
     std::cout<<counter++<<": "<<problem->evaluate()<<std::endl;
+    delete problem;
 }
 
 int main(int argc, char** argv) {
