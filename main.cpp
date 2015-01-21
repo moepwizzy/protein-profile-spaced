@@ -43,7 +43,6 @@ int main(int argc, char** argv) {
         print("prepare failed");
         exit(1);
     }
-    problem.print_param();
     if(!problem.train()) {
         print("train failed");
         exit(1);
