@@ -16,6 +16,7 @@ struct command_line_arguments {
   command_line_arguments(int, char **);
 };
 
+int aa_to_int(const char);
 string_vector_t split(const std::string,const char);
 int power(int,int);
 template <typename T>

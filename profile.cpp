@@ -15,6 +15,7 @@ profile::profile(std::string name, std::string path) : name(name) {
       frequencies.push_back(frq);
     }
     valid = true;
+    file.close();
   } else {
     std::cerr<<"File "<<fullpath<<" not found"<<std::endl;
     valid = false;
@@ -24,6 +25,36 @@ profile::profile(std::string name, std::string path) : name(name) {
 profile::~profile() {
   for (vector_it it = frequencies.begin(); it != frequencies.end(); ++it)
     delete [] *it;
+}
+
+bool profile::generate_from_fasta(std::string fasta_p) {
+  std::ifstream file(fasta_p.c_str());
+  if (file.is_open()) {
+    std::string line;
+    bool end = false;
+    while(!end && getline(file, line)) {
+      std::vector<std::string> segment_list = split(line, ' ');
+      if (segment_list[0].compare(name) == 0) {
+        while(!end && getline(file,line,'\n'))
+          if (line[0] != '>') {
+            sequence += line;
+          } else {
+            end = true;
+          }
+      }
+    }
+    file.close();
+    for (std::string::iterator it = sequence.begin(); 
+        it != sequence.end(); ++it) {
+      double *frq = new double[20];
+      for (unsigned int i = 0; i < 20; ++i)
+        frq[i] = 0;
+      frq[aa_to_int(*it)] = 1;
+      frequencies.push_back(frq);
+    }
+    valid = true;
+  }
+  return valid;
 }
 
 const std::string profile::get_name() {

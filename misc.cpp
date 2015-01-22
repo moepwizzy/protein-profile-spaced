@@ -56,6 +56,11 @@ command_line_arguments::command_line_arguments(int argc, char **argv) {
   }
 } 
 
+int aa_to_int (const char aa) {
+  std::string alphabet("ACDEFGHIKLMNPQRSTVWY");
+  return alphabet.find((char) toupper(aa));
+}
+
 std::vector<std::string> split(const std::string line,const char delim) {
   std::stringstream s_stream(line);
   std::string segment;

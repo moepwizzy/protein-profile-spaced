@@ -24,6 +24,7 @@ class profile {
  public:
   profile(std::string,std::string);
   ~profile();
+  bool generate_from_fasta(std::string);
   const std::string get_name();
   std::vector<double*> get_frequencies() {
     return frequencies;
