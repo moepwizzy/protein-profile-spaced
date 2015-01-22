@@ -17,7 +17,8 @@ profile::profile(std::string name, std::string path) : name(name) {
     valid = true;
     file.close();
   } else {
-    std::cerr<<"File "<<fullpath<<" not found"<<std::endl;
+    static int err_count;
+    std::cerr<<"File "<<fullpath<<" not found. No: "<<err_count<<std::endl;
     valid = false;
   }
 }
