@@ -44,8 +44,6 @@ std::vector<class_problem*> generate_class_problems_from_table(
         problem_vector.at(i)->add_instance(current_profile,
             atoi(split_line.at(i).c_str()));
     } else {
-      std::cerr<<"could not generate Profile for "<<
-        current_profile->get_name()<<std::endl;
       delete current_profile;
     }
   }

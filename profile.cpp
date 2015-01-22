@@ -53,6 +53,8 @@ bool profile::generate_from_fasta(std::string fasta_p) {
       frequencies.push_back(frq);
     }
     valid = true;
+  } else {
+    std::cerr<<"could not generate Profile for "<<name<<std::endl;
   }
   return valid;
 }
