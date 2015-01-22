@@ -37,12 +37,13 @@ bool profile::generate_from_fasta(std::string fasta_p) {
       std::vector<std::string> segment_list = split(line, ' ');
       segment_list[0].erase(0,1);
       if (segment_list[0].compare(name) == 0) {
-        while(!end && getline(file,line,'\n'))
+        while(!end && getline(file,line,'\n')) {
           if (line[0] != '>') {
             sequence += line;
           } else {
             end = true;
           }
+        }
       }
     }
     file.close();
@@ -51,7 +52,8 @@ bool profile::generate_from_fasta(std::string fasta_p) {
       double *frq = new double[20];
       for (unsigned int i = 0; i < 20; ++i)
         frq[i] = 0;
-      frq[aa_to_int(*it)] = 1;
+      if(aa_to_int(*it) > 0)
+        frq[aa_to_int(*it)] = 1;
       frequencies.push_back(frq);
     }
     valid = true;

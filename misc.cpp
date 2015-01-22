@@ -58,7 +58,8 @@ command_line_arguments::command_line_arguments(int argc, char **argv) {
 
 int aa_to_int (const char aa) {
   std::string alphabet("ACDEFGHIKLMNPQRSTVWY");
-  return alphabet.find((char) toupper(aa));
+  std::string::size_type pos = alphabet.find((char) toupper(aa));
+  return pos == std::string::npos ? -1 : (int) pos;
 }
 
 std::vector<std::string> split(const std::string line,const char delim) {
