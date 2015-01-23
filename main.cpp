@@ -56,6 +56,7 @@ int main(int argc, char** argv) {
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTestSeq((*it)->get_representing_vector(),NEG);
+    problem->normalize();
     if(!problem->prepare()) {
         print("prepare failed");
         exit(1);
