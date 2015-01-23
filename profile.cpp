@@ -36,15 +36,12 @@ bool profile::generate_from_fasta(std::string fasta_p) {
     while(!end && getline(file, line)) {
       std::vector<std::string> segment_list = split(line, ' ');
       segment_list[0].erase(0,1);
-      if (segment_list[0].compare(name) == 0) {
-        while(!end && getline(file,line,'\n')) {
-          if (line[0] != '>') {
+      if (segment_list[0].compare(name) == 0)
+        while(!end && getline(file,line,'\n'))
+          if (line[0] != '>')
             sequence += line;
-          } else {
+          else
             end = true;
-          }
-        }
-      }
     }
     file.close();
     for (std::string::iterator it = sequence.begin(); 

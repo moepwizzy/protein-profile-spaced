@@ -24,6 +24,7 @@ typedef std::vector<std::vector<int> > patterns_vector_t;
 typedef std::unordered_map<std::string, profile*> profile_map_t;
 typedef std::unordered_map<profile*, double> count_internal_t;
 typedef std::unordered_map<unsigned int, count_internal_t> count_t;
+typedef std::unordered_map<std::string,std::string> fasta_map_t;
 typedef std::mutex mu_t;
 inline void _lock_mutex(mu_t *m) {
   m->lock();
@@ -35,6 +36,7 @@ inline void _unlock_mutex(mu_t *m) {
 typedef std::tr1::unordered_map<std::string, profile*> profile_map_t;
 typedef std::tr1::unordered_map<profile*, double> count_internal_t;
 typedef std::tr1::unordered_map<unsigned int, count_internal_t> count_t;
+typedef std::tr1::unordered_map<std::string,std::string> fasta_map_t;
 typedef pthread_mutex_t mu_t;
 
 struct thread_struct {
@@ -65,6 +67,7 @@ class profile_container {
  public:
   profile_container(int,int,int);
   ~profile_container();
+  bool read_fasta_file(std::string);
   bool add_profile(profile*);
   profile* get_profile(std::string);
   bool count_all_profiles(int);

@@ -98,10 +98,7 @@ void profile_container::generate_patterns() {
   } while (std::next_permutation(patt.begin(), patt.end()));
   srand(time(0));
   std::random_shuffle(patterns_string.begin(), patterns_string.end());
-  if (n < patterns_string.size()) {
-    patterns_string.resize(n);
-  }
-  for (std::size_t i = 0; i < patterns_string.size(); ++i)
+  for (std::size_t i = 0; i < patterns_string.size() && i < n; ++i)
     for (std::size_t j = 0; j < patterns_string.at(i).size(); ++j)
       if (patterns_string.at(i).at(j) == '1')
         patterns.at(i).push_back((int)j);

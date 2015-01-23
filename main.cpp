@@ -31,25 +31,28 @@ int main(int argc, char** argv) {
   profile_container main_container (cl_args.k, cl_args.l, cl_args.n);
   std::vector<class_problem*> cp_vector = generate_class_problems_from_table(
       cl_args.table_path, cl_args.dir_path, cl_args.fasta_path, main_container);
-  print("moep");
   main_container.count_all_profiles(cl_args.number_of_threads);
   threadpool pool (cl_args.number_of_threads);
   for(std::vector<class_problem*>::iterator problem_it = cp_vector.begin();
       problem_it != cp_vector.end(); ++problem_it) {
     libsvm *problem = new libsvm;
     std::vector<profile*> data_points = (*problem_it)->get_positive_training();
+    std::cout<<data_points.size()<<" ";
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTrainSeq((*it)->get_representing_vector(),POS);
     data_points = (*problem_it)->get_negative_training();
+    std::cout<<data_points.size()<<" ";
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTrainSeq((*it)->get_representing_vector(),NEG);
     data_points = (*problem_it)->get_positive_testing();
+    std::cout<<data_points.size()<<" ";
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTestSeq((*it)->get_representing_vector(),POS);
     data_points = (*problem_it)->get_negative_testing();
+    std::cout<<data_points.size()<<std::endl;
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTestSeq((*it)->get_representing_vector(),NEG);
