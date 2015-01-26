@@ -36,8 +36,9 @@ void thread_train (void * prob_ptr) {
 int main(int argc, char** argv) {
   command_line_arguments cl_args(argc, argv);
   profile_container main_container (cl_args.k, cl_args.l, cl_args.n);
+  main_container.read_fasta_file(cl_args.fasta_path);
   std::vector<class_problem*> cp_vector = generate_class_problems_from_table(
-      cl_args.table_path, cl_args.dir_path, cl_args.fasta_path, main_container);
+      cl_args.table_path, cl_args.dir_path, main_container);
   main_container.count_all_profiles(cl_args.number_of_threads);
   threadpool pool (cl_args.number_of_threads);
   srand(time(0));

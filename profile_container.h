@@ -69,6 +69,7 @@ class profile_container {
   profile_container(int,int,int);
   ~profile_container();
   bool read_fasta_file(std::string);
+  fasta_map_t * get_fasta_map() { return &fasta_map; };
   bool add_profile(profile*);
   profile* get_profile(std::string);
   bool count_all_profiles(int);

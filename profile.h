@@ -12,6 +12,13 @@
 
 #include "misc.h"
 
+#if (__cplusplus >= 201103L)
+#include <unordered_map>
+typedef std::unordered_map<std::string,std::string> fasta_map_t;
+#else
+#include <tr1/unordered_map>
+typedef std::tr1::unordered_map<std::string,std::string> fasta_map_t;
+#endif
 typedef std::vector<double*>::iterator vector_it;
 typedef std::map<unsigned int,double> map_t;
 
@@ -24,7 +31,7 @@ class profile {
  public:
   profile(std::string,std::string);
   ~profile();
-  bool generate_from_fasta(std::string);
+  bool generate_from_fasta(fasta_map_t *);
   const std::string get_name();
   std::vector<double*> get_frequencies() {
     return frequencies;

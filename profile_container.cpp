@@ -22,14 +22,13 @@ bool profile_container::read_fasta_file(std::string path) {
   std::ifstream file(path.c_str());
   if (file.is_open()) {
     std::string line;
-    while(getline(file,line)) {
+    while(getline(file,line,'\n')) {
       std::string name;
       if(line[0] == '>') {
         std::vector<std::string> tmp = split(line,' ');
         name = tmp[0];
         fasta_map[name] = std::string("");
       } else {
-        line.erase(line.size()-1,1);
         fasta_map[name] += line;
       }
     }

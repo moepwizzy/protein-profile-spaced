@@ -20,8 +20,7 @@ void class_problem::instances_added() {
 }
 
 std::vector<class_problem*> generate_class_problems_from_table(
-    std::string table_p, std::string dir,
-    std::string fasta_p, profile_container &profiles) {
+    std::string table_p, std::string dir, profile_container &profiles) {
   std::ifstream file(table_p.c_str());
   std::string line;
   std::vector<class_problem*> problem_vector;
@@ -37,7 +36,7 @@ std::vector<class_problem*> generate_class_problems_from_table(
     split_line = split(line, ' ');
     profile *current_profile = new profile(split_line.front(), dir);
     if (current_profile->is_valid() || 
-        current_profile->generate_from_fasta(fasta_p) ) {
+        current_profile->generate_from_fasta(profiles.get_fasta_map()) ) {
       profiles.add_profile(current_profile);
       split_line.erase(split_line.begin());
       for (std::size_t i = 0; i < problem_vector.size(); ++i)
