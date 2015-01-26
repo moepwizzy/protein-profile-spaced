@@ -27,6 +27,7 @@ bool profile_container::read_fasta_file(std::string path) {
       if(line[0] == '>') {
         std::vector<std::string> tmp = split(line,' ');
         name = tmp[0];
+        name.erase(0,1);
         fasta_map[name] = std::string("");
       } else {
         fasta_map[name] += line;
