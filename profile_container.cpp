@@ -29,6 +29,7 @@ bool profile_container::read_fasta_file(std::string path) {
         name = tmp[0];
         fasta_map[name] = std::string("");
       } else {
+        line.erase(line.size()-1,1);
         fasta_map[name] += line;
       }
     }
