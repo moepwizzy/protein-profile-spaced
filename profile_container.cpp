@@ -22,8 +22,8 @@ bool profile_container::read_fasta_file(std::string path) {
   std::ifstream file(path.c_str());
   if (file.is_open()) {
     std::string line;
+    std::string name;
     while(getline(file,line,'\n')) {
-      std::string name;
       if(line[0] == '>') {
         std::vector<std::string> tmp = split(line,' ');
         name = tmp[0];
