@@ -18,6 +18,11 @@ static int counter = 0;
 
 void thread_train (void * prob_ptr) {
   libsvm *problem = (libsvm *) prob_ptr;
+    problem->normalize();
+    if(!problem->prepare()) {
+        print("prepare failed");
+        exit(1);
+    }
     if(!problem->train()) {
         print("train failed");
         exit(1);
@@ -37,30 +42,21 @@ int main(int argc, char** argv) {
       problem_it != cp_vector.end(); ++problem_it) {
     libsvm *problem = new libsvm;
     std::vector<profile*> data_points = (*problem_it)->get_positive_training();
-    std::cout<<data_points.size()<<" ";
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTrainSeq((*it)->get_representing_vector(),POS);
     data_points = (*problem_it)->get_negative_training();
-    std::cout<<data_points.size()<<" ";
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTrainSeq((*it)->get_representing_vector(),NEG);
     data_points = (*problem_it)->get_positive_testing();
-    std::cout<<data_points.size()<<" ";
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTestSeq((*it)->get_representing_vector(),POS);
     data_points = (*problem_it)->get_negative_testing();
-    std::cout<<data_points.size()<<std::endl;
     for (std::vector<profile*>::iterator it = data_points.begin();
         it != data_points.end(); ++it)
       problem->addTestSeq((*it)->get_representing_vector(),NEG);
-    problem->normalize();
-    if(!problem->prepare()) {
-        print("prepare failed");
-        exit(1);
-    }
     pool.addThread(thread_train, (void *) problem);
   }
   pool.wait();
