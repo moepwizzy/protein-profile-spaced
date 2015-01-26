@@ -29,6 +29,8 @@ profile::~profile() {
 }
 
 bool profile::generate_from_fasta(fasta_map_t * fasta_map) {
+  if (fasta_map->count(name) == 0)
+    print(name);
   sequence = (*fasta_map)[name];
   for (std::string::iterator it = sequence.begin(); 
       it != sequence.end(); ++it) {
