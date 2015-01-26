@@ -7,6 +7,9 @@
  */
 
 #include <iostream>
+#include <ctime>
+#include <algorithm>
+#include <cstdlib>
 #include "misc.h"
 #include "profile.h"
 #include "profile_container.h"
@@ -37,6 +40,8 @@ int main(int argc, char** argv) {
       cl_args.table_path, cl_args.dir_path, cl_args.fasta_path, main_container);
   main_container.count_all_profiles(cl_args.number_of_threads);
   threadpool pool (cl_args.number_of_threads);
+  srand(time(0));
+  std::random_shuffle(cp_vector.begin(), cp_vector.end());
   for(std::vector<class_problem*>::iterator problem_it = cp_vector.begin();
       problem_it != cp_vector.end(); ++problem_it) {
     libsvm *problem = new libsvm;
