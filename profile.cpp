@@ -28,7 +28,6 @@ profile::~profile() {
     delete [] *it;
 }
 
-
 bool profile::generate_from_fasta(fasta_map_t * fasta_map) {
   if (fasta_map->count(name) == 0)
     return valid = false;
