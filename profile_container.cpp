@@ -18,6 +18,26 @@ profile_container::~profile_container() {
     delete it->second;
 }
 
+bool profile_container::read_fasta_file(std::string path) {
+  std::ifstream file(path.c_str());
+  if (file.is_open()) {
+    std::string line;
+    while(getline(file,line)) {
+      std::string name;
+      if(line[0] == '>') {
+        std::vector<std::string> tmp = split(line,' ');
+        name = tmp[0];
+        fasta_map[name] = std::string("");
+      } else {
+        fasta_map[name] += line;
+      }
+    }
+    file.close();
+    return true;
+  } else {
+    return false;
+  }
+}
 
 bool profile_container::add_profile(profile *prof) {
   if (!addable || profiles.count(prof->get_name()) > 0)

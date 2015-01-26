@@ -18,17 +18,16 @@ static int counter = 0;
 
 void thread_train (void * prob_ptr) {
   libsvm *problem = (libsvm *) prob_ptr;
-    problem->normalize();
-    if(!problem->prepare()) {
-        print("prepare failed");
-        exit(1);
-    }
-    if(!problem->train()) {
-        print("train failed");
-        exit(1);
-    }
-    std::cout<<counter++<<": "<<problem->evaluate()<<std::endl;
-    delete problem;
+  if(!problem->prepare()) {
+      print("prepare failed");
+      exit(1);
+  }
+  if(!problem->train()) {
+      print("train failed");
+      exit(1);
+  }
+  std::cout<<counter++<<": "<<problem->evaluate()<<std::endl;
+  delete problem;
 }
 
 int main(int argc, char** argv) {

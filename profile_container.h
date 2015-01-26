@@ -64,6 +64,7 @@ class profile_container {
   patterns_vector_t patterns;
   void generate_patterns();
   mu_t mutex;
+  fasta_map_t fasta_map;
  public:
   profile_container(int,int,int);
   ~profile_container();
