@@ -70,5 +70,9 @@ int main(int argc, char** argv) {
         (void *) new train_struct(problem, &results, i));
   }
   pool.wait();
+  double avg_roc = 0;
+  for (std::size_t i = 0; i < results.size(); ++i)
+    avg_roc += results[i];
+  print(avg_roc/results.size());
   return 1;
 } 
