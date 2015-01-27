@@ -25,14 +25,10 @@ main.o:  main.cpp
 	$(CC) $(CFLAGS) main.cpp
 
 ../custom-libsvm-wrapper/liblibsvm_wrapper.a: ../custom-libsvm-wrapper/libsvm_wrapper.h ../custom-libsvm-wrapper/libsvm_wrapper.cpp
-	cd ../custom-libsvm-wrapper/
-	make ../custom-libsvm-wrapper/Makefile
-	cd ../protein-profile-spaced/
+	cd ../custom-libsvm-wrapper/ && make 
 
 ../threadpool/libthreadpool.a: ../threadpool/threadpool.h ../threadpool/threadpool.cpp
-	cd ../threadpool/
-	make ../threadpool/Makefile
-	cd ../protein-profile-spaced/
+	cd ../threadpool/ && make ../threadpool/Makefile
 
 .PHONY: clean
 clean:
