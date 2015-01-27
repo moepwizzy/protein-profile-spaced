@@ -69,7 +69,7 @@ void count_thread(void * arg_ptr) {
 bool profile_container::count_all_profiles(int number_of_threads) {
   threadpool pool(number_of_threads);
   for (patterns_vector_t::iterator pat_it = patterns.begin();
-      pat_it != patterns.end(); ++pat_it)
+      pat_it != patterns.end(); ++pat_it) {
     for (profile_map_t::iterator map_it = profiles.begin(); 
         map_it != profiles.end(); ++map_it) {
 #if (__cplusplus >= 201103L)
@@ -91,7 +91,8 @@ bool profile_container::count_all_profiles(int number_of_threads) {
         (void *) new thread_struct(&(*pat_it), &count_map, map_it->second, &mutex));
 #endif
     }
-  pool.wait();
+    pool.wait();
+  }
   for (profile_map_t::iterator prof_map_it = profiles.begin();
       prof_map_it != profiles.end(); ++prof_map_it) {
     for (count_t::iterator outer_it= count_map.begin();
@@ -123,6 +124,8 @@ void profile_container::generate_patterns() {
     for (std::size_t j = 0; j < patterns_string.at(i).size(); ++j)
       if (patterns_string.at(i).at(j) == '1')
         patterns.at(i).push_back((int)j);
+  if (patterns_string.size() < n)
+    patterns.resize(patterns_string.size());
 }
 
 void profile_container::print_stuff() {

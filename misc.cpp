@@ -72,5 +72,7 @@ std::vector<std::string> split(const std::string line,const char delim) {
 }
 
 int power (int base, int exponent) {
-  return exponent == 1 ? base : base * power(base, exponent - 1);
+  if (exponent < 0) 
+    return -1;
+  return exponent == 0 ? 1 : base * power(base, exponent - 1);
 }

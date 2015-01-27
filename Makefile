@@ -25,10 +25,10 @@ main.o:  main.cpp
 	$(CC) $(CFLAGS) main.cpp
 
 ../custom-libsvm-wrapper/liblibsvm_wrapper.a: ../custom-libsvm-wrapper/libsvm_wrapper.h ../custom-libsvm-wrapper/libsvm_wrapper.cpp
-	cd ../custom-libsvm-wrapper/ && make 
+	$(MAKE) -C ../custom-libsvm-wrapper/
 
 ../threadpool/libthreadpool.a: ../threadpool/threadpool.h ../threadpool/threadpool.cpp
-	cd ../threadpool/ && make ../threadpool/Makefile
+	$(MAKE) -C ../threadpool/
 
 .PHONY: clean
 clean:
