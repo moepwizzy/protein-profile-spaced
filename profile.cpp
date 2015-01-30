@@ -72,9 +72,10 @@ map_t * profile::count(std::vector<int> pattern) {
   for (std::size_t i = 0; i < frequencies.size() - pattern.back(); ++i) {
     std::list<frq_t *> rec_list;
     for (std::size_t j = 0; j < pattern.size(); ++j) {
-      rec_list.push_back(frequencies[i]);
+      rec_list.push_back(frequencies[i+pattern[j]]);
     }
-    std::vector<frq_t> probs = recursive_count(rec_list, 0.1);
+    std::vector<frq_t> probs = recursive_count(rec_list, -1);
+    //abort();
     for (std::size_t j = 0; j < probs.size(); ++j) {
       (*count_map)[probs[j].first] = probs[j].second;
     }
@@ -85,6 +86,8 @@ map_t * profile::count(std::vector<int> pattern) {
 std::vector<frq_t> profile::recursive_count(std::list<frq_t *> frqs, double limit) {
   std::vector<frq_t> out;
   frq_t * frq = frqs.front();
+  for (int i = 0; i<20;++i)
+    std::cout<<frq[i].first<<"->"<<frq[i].second<<std::endl;
   frqs.pop_front();
   std::vector<frq_t> tmp;
   if (frqs.size() > 0) {
@@ -95,6 +98,9 @@ std::vector<frq_t> profile::recursive_count(std::list<frq_t *> frqs, double limi
   for (int i = 0; i < 20; ++i) {
     if (frq[i].second > limit) {
       for (std::size_t j = 0; j < tmp.size(); ++j) {
+        //print(power(frq[i].first,frqs.size()+1), false);
+        //print(" ", false);
+        //print(tmp[j].first);
         out.push_back(
             std::make_pair(power(frq[i].first,frqs.size()+1) + tmp[j].first, 
               tmp[j].second * frq[i].second));
