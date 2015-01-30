@@ -86,8 +86,6 @@ map_t * profile::count(std::vector<int> pattern) {
 std::vector<frq_t> profile::recursive_count(std::list<frq_t *> frqs, double limit) {
   std::vector<frq_t> out;
   frq_t * frq = frqs.front();
-  for (int i = 0; i<20;++i)
-    std::cout<<frq[i].first<<"->"<<frq[i].second<<std::endl;
   frqs.pop_front();
   std::vector<frq_t> tmp;
   if (frqs.size() > 0) {
